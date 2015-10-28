@@ -1,11 +1,26 @@
-import Html exposing (div, button, text)
-import Html.Events exposing (onClick)
-import StartApp.Simple as StartApp
+import Effects exposing (Never)
+import Task exposing (Task)
+import StartApp as StartApp
 
-import Model exposing (model)
+import Model exposing (init)
 import Update exposing (update)
 import View exposing (view)
 
 
+app =
+  StartApp.start
+    { init = init
+    , update = update
+    , view = view
+    , inputs = []
+    }
+
+
 main =
-  StartApp.start { model = model, view = view, update = update }
+  app.html
+
+
+port tasks : Signal (Task.Task Never ())
+port tasks =
+  app.tasks
+
