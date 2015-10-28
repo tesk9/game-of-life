@@ -1,0 +1,16 @@
+* {
+  box-sizing: border-box;
+}
+
+td {
+  width: 10px;
+  height: 10px;
+}
+
+.not-alive {
+  background-color: black
+}
+
+.alive {
+  background-color: green
+}
