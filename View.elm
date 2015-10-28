@@ -2,17 +2,18 @@ module View (view) where
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (..)
 import Signal
-import Update exposing (Action)
+import Update exposing (Action(..))
 import Model exposing (Model)
 
-import Debug
 
 view : Signal.Address Action -> Model -> Html
 view address model =
   div 
     [] 
-    [ viewTable address model
+    [ viewTitle
+    , viewTable address model
     , node "link" 
       [ rel "stylesheet"
       , type' "text/css" 
@@ -20,6 +21,11 @@ view address model =
       ]
       []
     ]
+
+
+viewTitle : Html
+viewTitle =
+  h2 [] [ text "Game of Life in Elm" ]
 
 
 viewTable : Signal.Address Action -> Model -> Html
@@ -96,5 +102,7 @@ viewTableCell rowInd colInd address model =
         |> List.member coords
   in
     td 
-      [ classes ]
+      [ classes 
+      , onClick address (SetLifeBeginning coords)
+      ]
       []

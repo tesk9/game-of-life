@@ -2,7 +2,7 @@ module Model (Model, model) where
 
 model : Model
 model =
-  Model 50 50 [(10,2), (2,3), (1,1)]
+  Model 50 50 []
 
 type alias Model =
   { numberOfRows : Int
