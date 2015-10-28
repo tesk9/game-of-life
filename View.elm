@@ -20,6 +20,7 @@ view address model =
       , href "theme.css" 
       ]
       []
+    , viewStartButton address model
     ]
 
 
@@ -106,3 +107,8 @@ viewTableCell rowInd colInd address model =
       , onClick address (SetLifeBeginning coords)
       ]
       []
+
+
+viewStartButton : Signal.Address Action -> Model -> Html
+viewStartButton address model =
+  button [ onClick address Reproduce ] [ text "Begin" ]
