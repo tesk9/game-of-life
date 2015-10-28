@@ -3,7 +3,6 @@ module Update (update, Action(..)) where
 import Effects exposing (Effects, Never)
 
 import Model exposing (Model)
-import Debug
 
 update : Action -> Model -> (Model, Effects Action)
 update action model =
@@ -12,9 +11,8 @@ update action model =
       (model, Effects.none)
     SetLifeBeginning beginningCoords ->
       ({ model | coordsLife <- (beginningCoords :: model.coordsLife) }, Effects.none)
-    Reproduce ->
+    Reproduce time ->
       let
-        getLivingNeighbors : (Int, Int) -> List (Int, Int)
         getLivingNeighbors (x,y) =
           if (List.member (x + 1, y + 1) model.coordsLife) then
             [ (x + 1, y)
@@ -27,19 +25,21 @@ update action model =
           else
             []
 
-        limitToGridSize : (Int, Int) -> Bool
         limitToGridSize (x,y) =
             x > 0 && x <= model.numberOfRows && y > 0 && y <= model.numberOfCols
 
-        newCoordsLife : List (Int, Int)
         newCoordsLife =
           model.coordsLife
             |> List.concatMap getLivingNeighbors
             |> List.filter limitToGridSize
+
+        newModel =
+          { model | coordsLife <- newCoordsLife }
       in
-        ({ model | coordsLife <- newCoordsLife }, Effects.none)
+        (newModel, Effects.tick Reproduce)
+
 
 type Action
   = NoOp
   | SetLifeBeginning (Int, Int)
-  | Reproduce
+  | Reproduce Float

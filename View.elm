@@ -111,4 +111,4 @@ viewTableCell rowInd colInd address model =
 
 viewStartButton : Signal.Address Action -> Model -> Html
 viewStartButton address model =
-  button [ onClick address Reproduce ] [ text "Begin" ]
+  button [ onClick address (Reproduce 0) ] [ text "Begin" ]
