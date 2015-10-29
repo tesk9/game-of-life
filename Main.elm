@@ -6,6 +6,7 @@ import Model exposing (init)
 import Update exposing (update)
 import View exposing (view)
 
+import Time exposing (delay, millisecond)
 
 app =
   StartApp.start
@@ -22,5 +23,5 @@ main =
 
 port tasks : Signal (Task.Task Never ())
 port tasks =
-  app.tasks
+  delay (500 * millisecond) app.tasks
 
