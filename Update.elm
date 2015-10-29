@@ -36,7 +36,10 @@ update action model =
         newModel =
           { model | coordsLife <- newCoordsLife }
       in
-        (newModel, Effects.tick Reproduce)
+        if newModel.coordsLife == model.coordsLife then
+          (model, Effects.none)
+        else
+          (newModel, Effects.tick Reproduce)
 
 
 type Action
