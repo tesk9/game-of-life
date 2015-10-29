@@ -2,7 +2,7 @@ module Update (update, Action(..)) where
 
 import Effects exposing (Effects, Never)
 
-import Model exposing (Model)
+import Model exposing (Model, AnimationState(..))
 
 update : Action -> Model -> (Model, Effects Action)
 update action model =
@@ -37,9 +37,9 @@ update action model =
           { model | coordsLife <- newCoordsLife }
       in
         if newModel.coordsLife == model.coordsLife then
-          (model, Effects.none)
+          ({ model | state <- Stable }, Effects.none)
         else
-          (newModel, Effects.tick Reproduce)
+          ({ newModel | state <- Animating }, Effects.tick Reproduce)
 
 
 type Action

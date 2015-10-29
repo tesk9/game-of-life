@@ -5,7 +5,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Signal
 import Update exposing (Action(..))
-import Model exposing (Model)
+import Model exposing (Model, AnimationState(..))
 
 
 view : Signal.Address Action -> Model -> Html
@@ -111,4 +111,8 @@ viewTableCell rowInd colInd address model =
 
 viewStartButton : Signal.Address Action -> Model -> Html
 viewStartButton address model =
-  button [ onClick address (Reproduce 0) ] [ text "Begin" ]
+  if model.state == Animating then
+    button [ disabled True ] [ text "Evolving" ]
+  else
+    button [ onClick address (Reproduce 0) ] [ text "Begin" ]
+
